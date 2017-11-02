@@ -20,7 +20,36 @@ import LoginForm from './components/LoginForm'
 //   }
 // }
 
-const App = () => {
+class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      latitude: "",
+      longitude: ""
+    }
+
+  }
+
+
+
+  componentDidMount() {
+
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+
+    //It’s got a GPS location, so save to to the state to feed through your components
+
+    this.setState({
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    }, () => console.log(this.state))
+
+  })
+}
+
+
+
+  render() {
   return (
     <div>
       <NavLink to="/login">Login</NavLink>
@@ -29,6 +58,7 @@ const App = () => {
       <Route exact path="/login" component={LoginForm} />
     </div>
   )
+}
 }
 
 export default App;

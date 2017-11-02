@@ -8,7 +8,9 @@ import { BrowserRouter as Router } from 'react-router-dom'
 //TODO: How can I make Redux work in this application?
 // import './index.css';
 import App from './App';
+
 import usersReducer from './reducers/usersReducer'
+
 import registerServiceWorker from './registerServiceWorker';
 
 const rootReducer = combineReducers({ usersReducer })

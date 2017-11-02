@@ -1,4 +1,4 @@
-export function loginUser(username, password) {
+export function loginUser(username, password, latitude, longitude) {
   return (dispatch) => {
     fetch('http://localhost:3000/api/v1/login', {
       method: 'POST',
@@ -6,7 +6,7 @@ export function loginUser(username, password) {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify({ user: {username, password} })
+      body: JSON.stringify({ user: {username, password, latitude, longitude} })
     })
     .then(response => response.json())
     .then(userData => dispatch(setCurrentUser(userData)))

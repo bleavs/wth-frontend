@@ -2,10 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { loginUser } from '../actions/user'
 
+
+
 class LoginForm extends React.Component {
+
+
+
   state = {
     username: "",
-    password: ""
+    password: "",
   }
 
   handleUsernameChange = (event) => {
@@ -22,7 +27,10 @@ class LoginForm extends React.Component {
 
   handleLoginSubmit = (event) => {
     event.preventDefault()
+
+
     this.props.loginUser(this.state.username, this.state.password)
+
   }
 
   render() {
