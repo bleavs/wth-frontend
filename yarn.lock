@@ -904,7 +904,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.25.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -1318,6 +1318,10 @@ clap@^1.0.9:
   resolved "https://registry.yarnpkg.com/clap/-/clap-1.2.3.tgz#4f36745b32008492557f46412d66d50cb99bce51"
   dependencies:
     chalk "^1.1.3"
+
+classnames@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
 clean-css@4.1.x:
   version "4.1.9"
@@ -2295,7 +2299,7 @@ event-emitter@~0.3.5:
     d "1"
     es5-ext "~0.10.14"
 
-eventemitter3@1.x.x:
+eventemitter3@1.x.x, eventemitter3@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-1.2.0.tgz#1c86991d816ad1e504750e73874224ecf3bec508"
 
@@ -2458,7 +2462,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8.16:
+fbjs@^0.8.16, fbjs@^0.8.3:
   version "0.8.16"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.16.tgz#5e67432f550dc41b572bf55847b8aca64e5337db"
   dependencies:
@@ -2766,6 +2770,15 @@ globby@^6.1.0:
     object-assign "^4.0.1"
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
+
+google-map-react@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/google-map-react/-/google-map-react-0.25.0.tgz#d76ff1ac6557fc1eadc47375fc7d9518ebcc50ed"
+  dependencies:
+    eventemitter3 "^1.1.0"
+    fbjs "^0.8.3"
+    point-geometry "0.0.0"
+    scriptjs "^2.5.7"
 
 got@^5.0.0:
   version "5.7.1"
@@ -3673,6 +3686,10 @@ jest@20.0.4:
   dependencies:
     jest-cli "^20.0.4"
 
+jquery@x.*:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
+
 js-base64@^2.1.9:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.3.2.tgz#a79a923666372b580f8e27f51845c6f7e8fbfbaf"
@@ -3918,6 +3935,10 @@ lodash.camelcase@^4.3.0:
 lodash.cond@^4.3.0:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/lodash.cond/-/lodash.cond-4.5.2.tgz#f471a1da486be60f6ab955d17115523dd1d255d5"
+
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
 
 lodash.defaults@^4.2.0:
   version "4.2.0"
@@ -4618,6 +4639,10 @@ pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
 
+point-geometry@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/point-geometry/-/point-geometry-0.0.0.tgz#6fcbcad7a803b6418247dd6e49c2853c584daff7"
+
 portfinder@^1.0.9:
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.13.tgz#bb32ecd87c27104ae6ee44b5a3ccbf0ebb1aede9"
@@ -4968,7 +4993,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.6.0:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -5120,6 +5145,13 @@ react-dom@^16.0.0:
 react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
+
+react-places-autocomplete@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/react-places-autocomplete/-/react-places-autocomplete-5.4.3.tgz#321166247a9279b93ff21ee59112836058dda0ba"
+  dependencies:
+    lodash.debounce "^4.0.8"
+    prop-types "^15.5.8"
 
 react-redux@^5.0.6:
   version "5.0.6"
@@ -5591,6 +5623,10 @@ schema-utils@^0.3.0:
   dependencies:
     ajv "^5.0.0"
 
+scriptjs@^2.5.7:
+  version "2.5.8"
+  resolved "https://registry.yarnpkg.com/scriptjs/-/scriptjs-2.5.8.tgz#d0c43955c2e6bad33b6e4edf7b53b8965aa7ca5f"
+
 select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
@@ -5600,6 +5636,21 @@ selfsigned@^1.9.1:
   resolved "https://registry.yarnpkg.com/selfsigned/-/selfsigned-1.10.1.tgz#bf8cb7b83256c4551e31347c6311778db99eec52"
   dependencies:
     node-forge "0.6.33"
+
+semantic-ui-css@^2.2.12:
+  version "2.2.12"
+  resolved "https://registry.yarnpkg.com/semantic-ui-css/-/semantic-ui-css-2.2.12.tgz#afc462e5bb4f8a0dcfe3dca11274499a997490dd"
+  dependencies:
+    jquery x.*
+
+semantic-ui-react@^0.75.1:
+  version "0.75.1"
+  resolved "https://registry.yarnpkg.com/semantic-ui-react/-/semantic-ui-react-0.75.1.tgz#81c2ed7ed45562f89e5049c5a64195b9638d8daf"
+  dependencies:
+    babel-runtime "^6.25.0"
+    classnames "^2.2.5"
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
 
 semver-diff@^2.0.0:
   version "2.1.0"

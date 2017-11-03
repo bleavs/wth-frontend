@@ -12,6 +12,7 @@ import App from './App';
 import usersReducer from './reducers/usersReducer'
 
 import registerServiceWorker from './registerServiceWorker';
+import 'semantic-ui-css/semantic.min.css' 
 
 const rootReducer = combineReducers({ usersReducer })
 
