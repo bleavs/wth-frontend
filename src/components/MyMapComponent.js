@@ -1,5 +1,6 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react';
+import { Icon } from 'semantic-ui-react'
 
 
 
@@ -22,6 +23,10 @@ const AnyReactComponent = ({ text }) => (
 
 );
 
+const RunReactComponent = ({ text }) => (
+  <Icon name='circle' color='green' size="large" />
+);
+
 export default class SimpleMap extends React.Component {
 
   constructor(props){
@@ -29,8 +34,23 @@ export default class SimpleMap extends React.Component {
     console.log(this.props)
     console.log(this.props.lat)
 
+    this.state = {
+      allRuns: [],
+      infoBox: false
+    }
+
 
   }
+
+  // componentWillMount(){
+  //
+  //   fetch('http://localhost:3000/api/v1/runs')
+  //     .then(res => res.json())
+  //     .then(json => this.setState({
+  //       allRuns: json
+  //     }, () => console.log(this.state.allRuns))
+  //
+  // }
 
   static defaultProps = {
 
@@ -70,6 +90,17 @@ export default class SimpleMap extends React.Component {
             lng={this.props.searchedLong}
             text={'Searched Location'}
           />
+
+          {this.state.allRuns.map(run =>
+
+            <RunReactComponent
+              key={run.id}
+              lat={run.lat}
+              lng={run.lng}
+              run = {run}
+            />
+          )}
+
 
 
 
