@@ -1,10 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-// import PlacesAutoCompleteForm from './PlacesAutoCompleteForm'
+import CreateRunModal from './CreateRunModal'
 
 import SimpleMap from './MyMapComponent'
-
 import SimpleForm from './SearchLocation'
 
 
@@ -26,8 +25,7 @@ const Profile = (props) => {
 
       <h1>Add a Run (form):</h1>
 
-
-
+      <CreateRunModal />
 
       <SimpleMap lat={props.latitude} long={props.longitude} searchedLat={props.searchedLat} searchedLong={props.searchedLong} />
 
