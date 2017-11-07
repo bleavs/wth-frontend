@@ -5,6 +5,7 @@ import CreateRunModal from './CreateRunModal'
 
 import SimpleMap from './MyMapComponent'
 import SimpleForm from './SearchLocation'
+import ViewRuns from './ViewRuns'
 
 
 const Profile = (props) => {
@@ -12,6 +13,7 @@ const Profile = (props) => {
   console.log(props.latitude)
   console.log(props.longitude)
   console.log(props.searchLocation)
+  console.log(props.currentUser)
 
 
 
@@ -20,10 +22,10 @@ const Profile = (props) => {
 
       <h1>Hello, {props.username}</h1>
 
-      <h1>Current Latitude: {props.latitude}</h1>
-      <h1>Current Longitude: {props.longitude}</h1>
+      <h1> Your Upcoming Runs: </h1>
 
-      <h1>Add a Run (form):</h1>
+        <ViewRuns username={props.username} />
+
 
       <CreateRunModal />
 

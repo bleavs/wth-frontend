@@ -1,8 +1,6 @@
 import React from 'react'
 import GoogleMapReact from 'google-map-react';
-import { Icon } from 'semantic-ui-react'
-
-
+import { Icon, Button, Form } from 'semantic-ui-react'
 
 
 const AnyReactComponent = ({ text }) => (
@@ -53,7 +51,6 @@ const InfoBox = (props) => (
 
     <p><b>Date:</b> {props.run.date}</p>
 
-
   </div>
 
 );
@@ -75,6 +72,16 @@ const JoinBox = (props) => (
 
     <p><b>Date:</b> {props.run.date}</p>
 
+    <Form
+    size='large' key='large'
+    onSubmit={props.handleSubmit}
+    >
+      <Button color='grey' onSubmit={props.handleSubmit}>
+        <Icon name='marker' /> Submit
+      </Button>
+
+  </Form>
+
 
   </div>
 
@@ -94,6 +101,7 @@ export default class SimpleMap extends React.Component {
 
     this.state = {
       allRuns: [],
+      userRuns: [],
       lat: "",
       lng: "",
       infoBox: false,
@@ -145,6 +153,38 @@ export default class SimpleMap extends React.Component {
 
   }
 
+  handleSubmit = (event) => {
+
+    event.preventDefault()
+    console.log(this.state)
+    console.log(this.state.run.id)
+
+    let newRun = {
+    name: this.state.name,
+    description: this.state.description,
+    distance: this.state.distance,
+    expected_pace: this.state.expectedPace,
+    start_time: this.state.startTime,
+    expected_end_time: this.state.expectedEndTime,
+    date: this.state.date,
+    lat: this.state.lat,
+    lng: this.state.lng
+  }
+
+  let runUpdateParams = {
+    method: 'PATCH',
+    headers: {
+      'Accept':'application/json',
+      'Content-Type':'application/json',
+      'Authorization':`Bearer ${localStorage.getItem('jwt')}`},
+    body: JSON.stringify(newRun)
+  }
+
+  fetch(`http://localhost:3000/api/v1/runs/${this.state.run.id}`, runUpdateParams)
+    .then(resp=>resp.json())
+    .then(resp => console.log(resp))
+}
+
   render() {
     console.log(this.props)
     console.log(this.state)
@@ -152,8 +192,10 @@ export default class SimpleMap extends React.Component {
     return (
       <div>
 
+
+
             {this.state.joinBox ?
-            <JoinBox lat={this.state.lat} lng={this.state.lng} run={this.state.run}/>
+            <JoinBox lat={this.state.lat} lng={this.state.lng} run={this.state.run} handleSubmit={this.handleSubmit}/>
 
           : console.log("noinfobox")}
 

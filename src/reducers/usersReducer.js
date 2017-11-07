@@ -7,7 +7,7 @@ export default function usersReducer(state = { username: null }, action) {
       console.log({...state, username: action.payload.username});
 
       return {...state, username: action.payload.username}
-      
+
     default:
       return state
   }
