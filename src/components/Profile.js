@@ -22,7 +22,6 @@ const Profile = (props) => {
 
       <h1>Hello, {props.username}</h1>
 
-      <h1> Your Upcoming Runs: </h1>
 
         <ViewRuns username={props.username} />
 
