@@ -25,14 +25,15 @@ const RunReactComponent = ({ text }) => (
 );
 
 let divStyle = {
-  border: '3px solid #7e20db',
-  minWidth: "170px",
+  border: '3px solid #666699',
+
+
   backgroundColor: 'white',
   color: 'black',
   fontSize: 13,
   padding: 4,
   cursor: 'pointer',
-  borderRadius: '10%',
+  borderRadius: '5%',
   float: 'right'
 }
 
@@ -40,16 +41,19 @@ const InfoBox = (props) => (
 
   <div style={divStyle}>
 
-    <p><b>Name:</b> {props.run.name}</p>
+    <p><b>Date:</b> {props.run.date}</p>
+
+    <p><b>Start Time:</b> {props.run.start_time}</p>
+
     <p><b>Description:</b> {props.run.description}</p>
 
     <p><b>Distance(Miles):</b> {props.run.distance}</p>
+
     <p><b>Expected Pace:</b> {props.run.expected_pace}</p>
 
-    <p><b>Start Time:</b> {props.run.start_time}</p>
-    <p><b>Expected End Time:</b> {props.run.expected_end_time}</p>
 
-    <p><b>Date:</b> {props.run.date}</p>
+
+
 
   </div>
 
@@ -61,23 +65,26 @@ const JoinBox = (props) => (
 
     <p><b>Would You Like To Join this Run?:</b></p>
 
-    <p><b>Name:</b> {props.run.name}</p>
-    <p><b>Description:</b> {props.run.description}</p>
-
-    <p><b>Distance(Miles):</b> {props.run.distance}</p>
-    <p><b>Expected Pace:</b> {props.run.expected_pace}</p>
-
+    <p><b>Date:</b> {props.run.date}</p>
     <p><b>Start Time:</b> {props.run.start_time}</p>
     <p><b>Expected End Time:</b> {props.run.expected_end_time}</p>
 
-    <p><b>Date:</b> {props.run.date}</p>
+    <p><b>Name:</b> {props.run.name}</p>
+
+    <p><b>Description:</b> {props.run.description}</p>
+
+    <p><b>Distance(Miles):</b> {props.run.distance}</p>
+
+    <p><b>Expected Pace:</b> {props.run.expected_pace}</p>
+
+
 
     <Form
     size='large' key='large'
     onSubmit={props.handleSubmit}
     >
       <Button color='grey' onSubmit={props.handleSubmit}>
-        <Icon name='marker' /> Submit
+        <Icon name='marker' />  Join Run
       </Button>
 
   </Form>
@@ -94,6 +101,8 @@ export default class SimpleMap extends React.Component {
 
     console.log(this.props)
     console.log(this.props.lat)
+    console.log(this.props.geoLat)
+    console.log(this.props.geoLong)
 
     this.childMouseEnter = this.childMouseEnter.bind(this)
     this.childMouseLeave = this.childMouseLeave.bind(this)
@@ -124,7 +133,7 @@ export default class SimpleMap extends React.Component {
 
   static defaultProps = {
     center: {lat: 60.70, lng: -74.01},
-    zoom: 14
+    zoom: 12
   };
 
   // write childMouseEnter -- to setstate on lat, long, and info toggle --
@@ -183,6 +192,10 @@ export default class SimpleMap extends React.Component {
   fetch(`http://localhost:3000/api/v1/runs/${this.state.run.id}`, runUpdateParams)
     .then(resp=>resp.json())
     .then(resp => console.log(resp))
+
+    this.setState({
+      joinBox: false
+    })
 }
 
   render() {
@@ -199,7 +212,7 @@ export default class SimpleMap extends React.Component {
 
           : console.log("noinfobox")}
 
-      <div style={{height: '500px', width: '500px'}} >
+      <div style={{width: '500px', height: '500px'}} >
 
        <GoogleMapReact
 

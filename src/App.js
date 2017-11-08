@@ -53,11 +53,20 @@ class App extends Component {
 
   render() {
   return (
-    <div>
+    <div style={{background: '#339966'}}>
+
       <NavLink to="/login">Login</NavLink>
       <NavLink to="/profile">Profile</NavLink>
 
-      <Route exact path="/profile" render={()=><Profile latitude={this.state.latitude} longitude={this.state.longitude} searchedLat={this.state.searchedLat} searchedLong={this.state.searchedLong} searchLocation={this.searchLocation} currentUser={this.currentUser}/>} />
+      <Route exact path="/profile" render={()=><Profile
+        latitude={this.state.latitude}
+        longitude={this.state.longitude}
+        searchedLat={this.state.searchedLat}
+        searchedLong={this.state.searchedLong}
+        searchLocation={this.searchLocation}
+        geoLat={this.state.geolat}
+        geoLong={this.state.geolong}
+        currentUser={this.currentUser}/>} />
 
       <Route exact path="/login" component={LoginForm} />
     </div>

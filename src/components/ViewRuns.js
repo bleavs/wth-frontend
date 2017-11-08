@@ -6,28 +6,30 @@ var lastname;
 
 
 let divStyle = {
-  border: '3px solid #7e20db',
-  minWidth: "170px",
+  border: '3px solid #666699',
+  margin: 'auto',
+  width: '75%',
+
   backgroundColor: 'white',
   color: 'black',
+
   fontSize: 13,
   padding: 4,
   cursor: 'pointer',
-  borderRadius: '10%',
-  float: 'right'
+
+
 }
 
 const RunBox = (props) => (
 
-  <div style={{  border: '3px solid #7e20db',
-    minWidth: "170px",
+  <div style={{  border: '3px dashed #666699',
+  
     backgroundColor: 'white',
     color: 'black',
     fontSize: 13,
     padding: 4,
-    cursor: 'pointer',
-    borderRadius: '10%',
-    display: 'inline-block'}}>
+    cursor: 'pointer'
+    }}>
 
     <p><b>Name:</b> {props.run.name}</p>
 

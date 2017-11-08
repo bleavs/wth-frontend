@@ -14,23 +14,36 @@ const Profile = (props) => {
   console.log(props.longitude)
   console.log(props.searchLocation)
   console.log(props.currentUser)
+  console.log(props.geoLat)
 
 
 
   return (
     <div>
+        <h1>---------------------------</h1>
+      <h1>Welcome Back to With The Herd</h1>
+        <h1>---------------------------</h1> 
+
 
       <h1>Hello, {props.username}</h1>
 
+        <SimpleForm searchLocation={props.searchLocation} />
 
-        <ViewRuns username={props.username} />
+        <br />
+        <br />
 
+
+      <SimpleMap lat={props.latitude} long={props.longitude} searchedLat={props.searchedLat} searchedLong={props.searchedLong} geoLat={props.geoLat} geoLong={props.geoLong} />
+
+      <br />
 
       <CreateRunModal />
 
-      <SimpleMap lat={props.latitude} long={props.longitude} searchedLat={props.searchedLat} searchedLong={props.searchedLong} />
+      <br />
+      <br />
 
-      <SimpleForm searchLocation={props.searchLocation} />
+
+      <ViewRuns username={props.username} />
 
 
     </div>

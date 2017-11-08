@@ -113,6 +113,7 @@ class CreateRunModal extends React.Component {
 
   render() {
     return(
+
       <Modal trigger={<Button color="grey">Create a Run</Button>} closeIcon>
       <Header icon='marker' align="center" size="large" content='Create a run!' />
         <Modal.Content>
@@ -196,6 +197,7 @@ class CreateRunModal extends React.Component {
         </Grid>
     </Modal.Content>
   </Modal>
+
   )
   }
 }
