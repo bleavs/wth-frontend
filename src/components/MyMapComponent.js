@@ -2,6 +2,10 @@ import React from 'react'
 import GoogleMapReact from 'google-map-react';
 import { Icon, Button, Form } from 'semantic-ui-react'
 
+var name;
+var firstname;
+var lastname;
+
 
 const AnyReactComponent = ({ text }) => (
 
@@ -21,8 +25,17 @@ const AnyReactComponent = ({ text }) => (
 );
 
 const RunReactComponent = ({ text }) => (
-  <Icon name='circle' color='green' size="large" />
+  <Icon name='map pin' color='green' size="large" />
 );
+
+const UserRunReactComponent = ({ text }) => (
+  <Icon name='street view' color='blue' size="large" />
+);
+
+const HereReactComponent = ({ text }) => (
+  <Icon name='crosshairs' color='red' size="large" />
+);
+
 
 let divStyle = {
   border: '3px solid #666699',
@@ -51,10 +64,6 @@ const InfoBox = (props) => (
 
     <p><b>Expected Pace:</b> {props.run.expected_pace}</p>
 
-
-
-
-
   </div>
 
 );
@@ -76,8 +85,6 @@ const JoinBox = (props) => (
     <p><b>Distance(Miles):</b> {props.run.distance}</p>
 
     <p><b>Expected Pace:</b> {props.run.expected_pace}</p>
-
-
 
     <Form
     size='large' key='large'
@@ -108,57 +115,128 @@ export default class SimpleMap extends React.Component {
     this.childMouseLeave = this.childMouseLeave.bind(this)
     this.childClick = this.childClick.bind(this)
 
+    console.log(this.props.username.split(' ')[0])
+    console.log(this.props.username.split(' ')[1])
+
+
+    if (this.props.username.split(' ')[1]){
+      firstname = this.props.username.split(' ')[0]
+      lastname = this.props.username.split(' ')[1]
+
+      name = `${firstname}%20${lastname}`
+
+    }
+    else {
+      name = this.props.username
+    }
+
     this.state = {
       allRuns: [],
       userRuns: [],
+      userId: "",
       lat: "",
       lng: "",
       infoBox: false,
-      joinBox: false
+      joinBox: false,
+      sendname: name
     }
+
+
 
   }
 
   // make get  fetch to runs controller route -- set upcoming runs to returned data
 
   componentWillMount(){
+    console.log(this.state.sendname)
+
+
+    // users runs
+
+      fetch(`http://localhost:3000/api/v1/users/${this.state.sendname}`)
+      .then(res => res.json())
+      .then(json => this.setState({
+        userId: json.id,
+        userRuns: json.runs
+
+      }, () => console.log(this.state.userId)))
+
+
+    // all runs
 
     fetch('http://localhost:3000/api/v1/runs')
       .then(res => res.json())
       .then(json => this.setState({
         allRuns: json
-      }, () => console.log(this.state.allRuns))
+      }, () => console.log(this.state.allRuns[0].users[0].id)))
 
-  )}
+
+
+
+
+
+
+  }
 
   static defaultProps = {
     center: {lat: 60.70, lng: -74.01},
-    zoom: 12
+    zoom: 14
   };
 
   // write childMouseEnter -- to setstate on lat, long, and info toggle --
   // also write childMouseLeave- to set toggle on infobox
 
   childMouseEnter(num, childProps){
-    this.setState({
+
+    if (childProps.run !== undefined && this.state.userRuns.filter(userrun => userrun.id === childProps.run.id).length !== 0){
+
+      this.setState({
+        lat: childProps.lat,
+        lng: childProps.lng,
+        infoBox: true,
+        joinBox: false,
+
+        run: childProps.run
+      })
+
+    }
+
+    else if (childProps.run !== undefined){
+
+      this.setState({
       lat: childProps.lat,
       lng: childProps.lng,
       infoBox: true,
       run: childProps.run
     })
+
   }
+
+}
+
 
   childMouseLeave(num, childProps){
     this.setState({
-      infoBox: false
+      infoBox: false,
+
     })
   }
 
   childClick(num, childProps){
 
-    this.setState({
-      joinBox: true
-    })
+
+    if (childProps.run !== undefined && this.state.userRuns.filter(userrun => userrun.id === childProps.run.id).length === 0){
+
+      this.setState({
+        joinBox: true
+      })
+    }
+
+    else if (childProps.run !== undefined && this.state.userRuns.filter(userrun => userrun.id === childProps.run.id).length !== 0){
+      this.setState({
+        joinBox: false
+      })
+    }
 
   }
 
@@ -212,7 +290,7 @@ export default class SimpleMap extends React.Component {
 
           : console.log("noinfobox")}
 
-      <div style={{width: '500px', height: '500px'}} >
+      <div style={{width: '60%', height: '500px'}} >
 
        <GoogleMapReact
 
@@ -230,9 +308,20 @@ export default class SimpleMap extends React.Component {
 
         >
 
-
+          <HereReactComponent lat={this.props.geoLat} lng={this.props.geoLong} />
 
           {this.state.allRuns.map(run =>
+
+            this.state.userRuns.filter(userrun => userrun.id === run.id).length > 0 ?
+
+              <UserRunReactComponent
+                key={run.id}
+                lat={run.lat}
+                lng={run.lng}
+                run = {run}
+              />
+
+              :
 
             <RunReactComponent
               key={run.id}
@@ -240,7 +329,10 @@ export default class SimpleMap extends React.Component {
               lng={run.lng}
               run = {run}
             />
-          )}
+
+
+          )
+        }
 
           {this.state.infoBox ?
             <InfoBox lat={this.state.lat} lng={this.state.lng} run={this.state.run}/>

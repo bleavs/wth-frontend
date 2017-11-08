@@ -23,7 +23,7 @@ let divStyle = {
 const RunBox = (props) => (
 
   <div style={{  border: '3px dashed #666699',
-  
+
     backgroundColor: 'white',
     color: 'black',
     fontSize: 13,
@@ -88,7 +88,7 @@ class ViewRuns extends Component {
       .then(res => res.json())
       .then(json => this.setState({
         currentUserRuns: json.runs
-      }, () => console.log(this.state.currentUserRuns[0]))
+      }, () => console.log(this.state.currentUserRuns))
 
   )}
 

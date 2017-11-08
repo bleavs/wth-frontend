@@ -21,8 +21,8 @@ const Profile = (props) => {
   return (
     <div>
         <h1>---------------------------</h1>
-      <h1>Welcome Back to With The Herd</h1>
-        <h1>---------------------------</h1> 
+      <h1>Welcome Back to With The Herd (Eventual Navbar)</h1>
+        <h1>---------------------------</h1>
 
 
       <h1>Hello, {props.username}</h1>
@@ -33,7 +33,7 @@ const Profile = (props) => {
         <br />
 
 
-      <SimpleMap lat={props.latitude} long={props.longitude} searchedLat={props.searchedLat} searchedLong={props.searchedLong} geoLat={props.geoLat} geoLong={props.geoLong} />
+      <SimpleMap lat={props.latitude} long={props.longitude} searchedLat={props.searchedLat} searchedLong={props.searchedLong} geoLat={props.geoLat} geoLong={props.geoLong} username={props.username} />
 
       <br />
 
