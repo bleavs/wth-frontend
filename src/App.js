@@ -19,11 +19,21 @@ class App extends Component {
 
   }
 
+  //what other state should be passed up?
+
+  // on submission of a create run or join run -- the App state should know the new allruns + userruns to display
+
+  // App should then pass down those allruns + userruns down to childComponents and they should then rerender the viewruns list as well as the display of the map
+
+  // should filter states for the viewruns list also be at app-level? -- possibly
+      // the view runs components and the map component both need to be aware of those changes so it makes sense that it's parent would need to pass that down 
+
   componentDidMount() {
 
     this.watchID = navigator.geolocation.watchPosition((position) => {
 
     //It’s got a GPS location, so save to to the state to feed through your components
+    //currently setting geolat + geolong as same thing as latitude and longitude -- look into this reasoning - does it make sense
 
     this.setState({
       latitude: position.coords.latitude,
@@ -38,6 +48,8 @@ class App extends Component {
   searchLocation = ((latlng) => {
       console.log(latlng)
 
+      // this overrides latitude and longitude-- to the searched address- which changes what the map shows -- but also sets a searchedLat + searched Long
+
       this.setState({
         latitude: latlng.lat ,
         longitude: latlng.lng,
@@ -45,9 +57,8 @@ class App extends Component {
         searchedLong: latlng.lng
       }, () => console.log(this.state))
 
-
-
     })
+
 
 
 

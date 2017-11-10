@@ -8,7 +8,9 @@ var lastname;
 let divStyle = {
   border: '3px solid #666699',
   margin: 'auto',
-  width: '75%',
+
+  width: '45vw',
+
 
   backgroundColor: 'white',
   color: 'black',
@@ -95,18 +97,41 @@ class ViewRuns extends Component {
 
   render() {
   return (
+
     <div style={divStyle}>
-      <h1>Your Upcoming Runs</h1>
 
-      {this.state.currentUserRuns.map(run =>
+      <h1>Upcoming Runs</h1>
 
-        <RunBox
-          key={run.id}
-          lat={run.lat}
-          lng={run.lng}
-          run = {run}
-        />
-      )}
+          <div>
+            Radio Buttons for YOURS, OTHERS, ALL, and YOUR HERDS Filter
+          </div>
+
+          <div>
+            Distance Filter toggle (on/off) w/ radio buttons for w/in one mile and five miles
+              w/ searchbar here to switch between relative to geoloc and searchedlocation
+          </div>
+
+          <div>
+            Soonest Filter toggle (on/off) - and if toggled on a Today/Tomorrow radio buttons
+          </div>
+
+          <div>
+            Below the Soonest filter should be a scrollable list of runs that presents relative to filters
+            and on click- possibly displays its location
+          </div>
+
+          <div>
+
+          {this.state.currentUserRuns.map(run =>
+
+            <RunBox
+              key={run.id}
+              lat={run.lat}
+              lng={run.lng}
+              run = {run}
+            />
+          )}
+        </div>
 
 
     </div>

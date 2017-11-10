@@ -7,22 +7,7 @@ var firstname;
 var lastname;
 
 
-const AnyReactComponent = ({ text }) => (
 
-  <div style={{
-    position: 'relative',
-    color: 'white',
-    background: 'red',
-    height: 40,
-    width: 60,
-    top: -20,
-    left: -30
-  }}>
-
-    {text}
-
-  </div>
-);
 
 const RunReactComponent = ({ text }) => (
   <Icon name='map pin' color='green' size="large" />
@@ -50,6 +35,31 @@ let divStyle = {
   float: 'right'
 }
 
+let divJoinStyle = {
+  border: '3px solid #666699',
+
+  backgroundColor: 'white',
+  color: 'black',
+  fontSize: 13,
+  padding: 4,
+  cursor: 'pointer',
+  borderRadius: '5%',
+  float: 'right'
+}
+
+// let divWraoMapStyle = {
+//   height: '1000px',
+//   width: '1000px'
+// }
+
+let divMapStyle = {
+  height: '400px',
+  width: '40%',
+  position: 'relative',
+  float: 'right'
+}
+
+
 const InfoBox = (props) => (
 
   <div style={divStyle}>
@@ -70,7 +80,7 @@ const InfoBox = (props) => (
 
 const JoinBox = (props) => (
 
-  <div style={divStyle}>
+  <div style={divJoinStyle}>
 
     <p><b>Would You Like To Join this Run?:</b></p>
 
@@ -90,7 +100,7 @@ const JoinBox = (props) => (
     size='large' key='large'
     onSubmit={props.handleSubmit}
     >
-      <Button color='grey' onSubmit={props.handleSubmit}>
+      <Button color='grey'>
         <Icon name='marker' />  Join Run
       </Button>
 
@@ -169,12 +179,6 @@ export default class SimpleMap extends React.Component {
       .then(json => this.setState({
         allRuns: json
       }, () => console.log(this.state.allRuns[0].users[0].id)))
-
-
-
-
-
-
 
   }
 
@@ -269,7 +273,16 @@ export default class SimpleMap extends React.Component {
 
   fetch(`http://localhost:3000/api/v1/runs/${this.state.run.id}`, runUpdateParams)
     .then(resp=>resp.json())
-    .then(resp => console.log(resp))
+    .then(resp => console.log(resp)).then( () => {
+      fetch(`http://localhost:3000/api/v1/users/${this.state.sendname}`)
+      .then(res => res.json())
+      .then(json => this.setState({
+        userRuns: json.runs
+
+      }, () => console.log(this.state.userRuns)))
+    }
+
+    )
 
     this.setState({
       joinBox: false
@@ -281,16 +294,14 @@ export default class SimpleMap extends React.Component {
     console.log(this.state)
 
     return (
-      <div>
+      <div style={{display: 'block'}}>
 
 
 
-            {this.state.joinBox ?
-            <JoinBox lat={this.state.lat} lng={this.state.lng} run={this.state.run} handleSubmit={this.handleSubmit}/>
 
-          : console.log("noinfobox")}
 
-      <div style={{width: '60%', height: '500px'}} >
+
+      <div style={{width: '45vw', height: '45vh', float: 'right'}}>
 
        <GoogleMapReact
 
@@ -341,6 +352,44 @@ export default class SimpleMap extends React.Component {
 
       </GoogleMapReact>
 
+      </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+        <br />
+
+
+
+
+
+      <div style={{float: 'right'}}>
+          {this.state.joinBox ?
+          <JoinBox lat={this.state.lat} lng={this.state.lng} run={this.state.run} handleSubmit={this.handleSubmit}/>
+
+        : console.log("noinfobox")}
       </div>
 
 

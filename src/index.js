@@ -12,7 +12,7 @@ import App from './App';
 import usersReducer from './reducers/usersReducer'
 
 import registerServiceWorker from './registerServiceWorker';
-import 'semantic-ui-css/semantic.min.css' 
+import 'semantic-ui-css/semantic.min.css'
 
 const rootReducer = combineReducers({ usersReducer })
 
@@ -20,7 +20,14 @@ const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk
 
 console.log("Redux store state: ", store.getState())
 
-ReactDOM.render(<Provider store={store}><Router><App /></Router></Provider>, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
+
+  document.getElementById('root'));
 registerServiceWorker();
 
 //for redux to work we need provider, createStore, and IMPORT REDUX
