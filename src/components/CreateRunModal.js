@@ -8,8 +8,8 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 
 class CreateRunModal extends React.Component {
 
-  constructor (){
-    super()
+  constructor (props){
+    super(props)
     this.state = {
       name: '',
       description: '',
@@ -20,6 +20,7 @@ class CreateRunModal extends React.Component {
       date: '',
       lat: '',
       lng: '',
+
       modalOpen: false
     }
   }
@@ -115,14 +116,16 @@ class CreateRunModal extends React.Component {
 
   fetch('http://localhost:3000/api/v1/runs', runCreateParams)
     .then(resp=>resp.json())
-    .then(resp => console.log(resp))
+    .then(resp => console.log(resp)).then(() => {
+    // props.handleCreateRunSubmit
+  })
 
-    this.setState({
-      modalOpen: false
-    })
-
+  this.setState({
+    modalOpen: false
+  })
 
 }
+
 
   render() {
     return(

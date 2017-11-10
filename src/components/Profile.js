@@ -85,7 +85,7 @@ const Profile = (props) => {
                 <br />
 
         <div style={{float: 'right'}}>
-          <CreateRunModal />
+          <CreateRunModal handleCreateRunSubmit={props.handleCreateRunSubmit} />
         </div>
 
       </div>

@@ -24,7 +24,11 @@ class App extends Component {
       allRuns: [],
       userRuns: [],
       userId: "",
-      simpleMap: ""
+      simpleMapLat: "",
+      simpleMapLong: "",
+      infoBox: false,
+      joinBox: false,
+      simpleMapSendName: ""
 
 
     }
@@ -65,11 +69,15 @@ class App extends Component {
       this.setState({
         latitude: latlng.lat ,
         longitude: latlng.lng,
-        searchedLat: latlng.lat ,
+        searchedLat: latlng.lat,
         searchedLong: latlng.lng
       }, () => console.log(this.state))
 
     })
+
+handleCreateRunSubmit = (event) => {
+
+}
 
 
 
@@ -86,10 +94,29 @@ class App extends Component {
         longitude={this.state.longitude}
         searchedLat={this.state.searchedLat}
         searchedLong={this.state.searchedLong}
+
         searchLocation={this.searchLocation}
+
         geoLat={this.state.geolat}
         geoLong={this.state.geolong}
-        currentUser={this.currentUser}/>} />
+
+        currentUser={this.currentUser}
+
+        username={this.state.username}
+        currentUserRuns={this.state.currentUserRuns}
+        runBox={this.state.runBox}
+        sendname={this.state.sendname}
+
+        allRuns={this.state.allRuns}
+        userRuns={this.state.userRuns}
+        userId={this.state.userId}
+        simpleMapLat={this.state.simpleMapLat}
+        simpleMapLong={this.state.simpleMapLong}
+        infoBox={this.state.infoBox}
+        joinBox={this.state.joinBox}
+        simpleMapSendName={this.state.simpleMapSendName}
+
+        />} />
 
       <Route exact path="/login" component={LoginForm} />
     </div>
