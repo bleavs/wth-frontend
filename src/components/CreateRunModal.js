@@ -19,9 +19,14 @@ class CreateRunModal extends React.Component {
       expectedEndTime: '',
       date: '',
       lat: '',
-      lng: ''
+      lng: '',
+      modalOpen: false
     }
   }
+
+  handleOpen = () => this.setState({ modalOpen: true })
+
+  handleClose = () => this.setState({ modalOpen: false })
 
   handleNameChange = (event) => {
     this.setState({
@@ -83,6 +88,8 @@ class CreateRunModal extends React.Component {
   handleSubmit = (event) => {
 
     event.preventDefault()
+
+
     console.log(this.state)
 
     let newRun = {
@@ -109,13 +116,29 @@ class CreateRunModal extends React.Component {
   fetch('http://localhost:3000/api/v1/runs', runCreateParams)
     .then(resp=>resp.json())
     .then(resp => console.log(resp))
+
+    this.setState({
+      modalOpen: false
+    })
+
+
 }
 
   render() {
     return(
 
-      <Modal trigger={<Button color="grey">Create a Run</Button>} closeIcon>
+      <Modal
+        trigger={<Button onClick={this.handleOpen} color="grey">Create a Run</Button>}
+        open={this.state.modalOpen}
+        onClose={this.handleClose}
+        basic
+        size='small'
+
+      >
+
+
       <Header icon='marker' align="center" size="large" content='Create a run!' />
+
         <Modal.Content>
 
         <Grid columns={2} divided>
@@ -161,7 +184,7 @@ class CreateRunModal extends React.Component {
 
                 <Form.Field>
                   <input
-                    placeholder='Expected End Time '
+                    placeholder='Expected End Time'
                     onChange={this.handleExpectedEndTimeChange} />
                 </Form.Field>
 
@@ -173,13 +196,6 @@ class CreateRunModal extends React.Component {
 
                 <Form.Field>
                   <PlacesAutoCompleteForm handleLatLng={this.handleLatLng}/>
-                </Form.Field>
-
-
-                <Form.Field>
-                  <Button color='grey'>
-                    <Icon name='marker' /> Submit
-                  </Button>
                 </Form.Field>
 
               </Form>
@@ -196,6 +212,13 @@ class CreateRunModal extends React.Component {
 
         </Grid>
     </Modal.Content>
+
+    <Modal.Actions>
+       <Button color='green' onClick={this.handleSubmit} inverted>
+         <Icon name='marker' /> Submit
+       </Button>
+     </Modal.Actions>
+
   </Modal>
 
   )

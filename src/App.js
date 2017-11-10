@@ -14,7 +14,19 @@ class App extends Component {
       geolong: "",
       searchedLat: "",
       searchedLong: "",
-      currentUser: ""
+      currentUser: "",
+
+      username: "",
+      currentUserRuns: [],
+      runBox: false,
+      sendname: "",
+
+      allRuns: [],
+      userRuns: [],
+      userId: "",
+      simpleMap: ""
+
+
     }
 
   }
@@ -26,7 +38,7 @@ class App extends Component {
   // App should then pass down those allruns + userruns down to childComponents and they should then rerender the viewruns list as well as the display of the map
 
   // should filter states for the viewruns list also be at app-level? -- possibly
-      // the view runs components and the map component both need to be aware of those changes so it makes sense that it's parent would need to pass that down 
+      // the view runs components and the map component both need to be aware of those changes so it makes sense that it's parent would need to pass that down
 
   componentDidMount() {
 

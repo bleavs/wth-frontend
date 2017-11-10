@@ -17,7 +17,6 @@ let divStyle = {
 
   fontSize: 13,
   padding: 4,
-  cursor: 'pointer',
 
 
 }
@@ -30,7 +29,8 @@ const RunBox = (props) => (
     color: 'black',
     fontSize: 13,
     padding: 4,
-    cursor: 'pointer'
+
+
     }}>
 
     <p><b>Name:</b> {props.run.name}</p>
@@ -98,7 +98,7 @@ class ViewRuns extends Component {
   render() {
   return (
 
-    <div style={divStyle}>
+    <div className="ui container" style={divStyle}>
 
       <h1>Upcoming Runs</h1>
 
@@ -120,17 +120,35 @@ class ViewRuns extends Component {
             and on click- possibly displays its location
           </div>
 
-          <div>
 
-          {this.state.currentUserRuns.map(run =>
 
-            <RunBox
-              key={run.id}
-              lat={run.lat}
-              lng={run.lng}
-              run = {run}
-            />
-          )}
+
+
+          <div className="ui container" style={{overflow: 'scroll', position: 'absolute',
+
+  width:'45vw',
+  height: '45vw'
+}}>
+
+
+            {this.state.currentUserRuns.map(run =>
+
+              <div className="ui card">
+                <div className="card content">
+
+                <RunBox
+                  key={run.id}
+                  lat={run.lat}
+                  lng={run.lng}
+                  run = {run}
+                />
+
+
+              </div>
+            </div>
+
+            )}
+
         </div>
 
 

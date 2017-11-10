@@ -16,8 +16,6 @@ const Profile = (props) => {
   console.log(props.currentUser)
   console.log(props.geoLat)
 
-
-
   return (
     <div>
 
@@ -25,11 +23,9 @@ const Profile = (props) => {
       <h1>Welcome Back to With The Herd (Eventual Navbar)</h1>
         <h1>---------------------------</h1>
 
-
       <h1>Hello, {props.username}</h1>
 
       <div>
-
         <SimpleForm
           searchLocation={props.searchLocation}
           />
@@ -38,99 +34,82 @@ const Profile = (props) => {
         <br />
         <br />
 
-
         <div style={{float: 'left'}}>
-
           <ViewRuns
             username={props.username}
             />
-
         </div>
 
         <div style={{display: 'block'}}>
 
           <div style={{float: 'right'}}>
-
-          <SimpleMap
-            lat={props.latitude}
-            long={props.longitude}
-            searchedLat={props.searchedLat}
-            searchedLong={props.searchedLong}
-            geoLat={props.geoLat}
-            geoLong={props.geoLong}
-            username={props.username}
-            />
-
+            <SimpleMap
+              lat={props.latitude}
+              long={props.longitude}
+              searchedLat={props.searchedLat}
+              searchedLong={props.searchedLong}
+              geoLat={props.geoLat}
+              geoLong={props.geoLong}
+              username={props.username}
+              />
           </div>
 
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
 
-
-
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-
-
-
-        <div style={{float: 'left'}}>
-
-
-
+        <div style={{float: 'right'}}>
           <CreateRunModal />
-
         </div>
 
       </div>
 
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
 
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
 
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-
-
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
 
 
     </div>
