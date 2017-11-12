@@ -3,6 +3,10 @@ import { Route, NavLink } from 'react-router-dom'
 import Profile from './components/Profile'
 import LoginForm from './components/LoginForm'
 
+var name;
+var firstname;
+var lastname;
+
 class App extends Component {
 
   constructor(props){
@@ -75,9 +79,68 @@ class App extends Component {
 
     })
 
-handleCreateRunSubmit = (event) => {
+handleUsernameToApp = ((username) => {
 
-}
+  console.log(username)
+
+  if (username.split(' ')[1]){
+     firstname = username.split(' ')[0]
+     lastname = username.split(' ')[1]
+
+     name = `${firstname}%20${lastname}`
+
+   }
+   else {
+     name = username
+   }
+
+
+  this.setState({
+
+    sendname: name
+
+  }, () => fetch(`http://localhost:3000/api/v1/users/${this.state.sendname}`)
+    .then(res => res.json())
+    .then(json => this.setState({
+      currentUserRuns: json.runs
+    }, () => console.log(this.state.currentUserRuns)))
+  )
+
+  fetch('http://localhost:3000/api/v1/runs')
+    .then(res => res.json())
+    .then(json => this.setState({
+      allRuns: json
+    }, () => console.log(this.state.allRuns)))
+
+  }
+  )
+
+
+
+handleCreateRunSubmit = ((stuff) => {
+
+  console.log(stuff)
+
+  fetch('http://localhost:3000/api/v1/runs')
+    .then(res => res.json())
+    .then(json => this.setState({
+      allRuns: json
+    }, () => console.log(this.state.allRuns))).then( () => {
+
+      fetch(`http://localhost:3000/api/v1/users/${this.state.sendname}`)
+    .then(res => res.json())
+    .then(json => this.setState({
+      currentUserRuns: json.runs
+    }, () => console.log(this.state.currentUserRuns))
+  )
+
+})
+
+})
+
+
+
+
 
 
 
@@ -115,6 +178,14 @@ handleCreateRunSubmit = (event) => {
         infoBox={this.state.infoBox}
         joinBox={this.state.joinBox}
         simpleMapSendName={this.state.simpleMapSendName}
+
+        handleUsernameToApp={this.handleUsernameToApp}
+
+        handleCreateRunSubmit={this.handleCreateRunSubmit}
+
+
+
+
 
         />} />
 

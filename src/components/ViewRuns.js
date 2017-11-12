@@ -74,7 +74,9 @@ class ViewRuns extends Component {
     this.state = {
       currentUserRuns: [],
       runBox: false,
-      sendname: name
+      sendname: name,
+      allRuns: []
+
     }
 
   }
@@ -92,7 +94,23 @@ class ViewRuns extends Component {
         currentUserRuns: json.runs
       }, () => console.log(this.state.currentUserRuns))
 
-  )}
+  )
+}
+
+componentWillReceiveProps(nextProps) {
+
+  if (nextProps.currentUserRuns.length !== this.props.currentUserRuns.length) {
+
+    this.setState({
+      currentUserRuns: nextProps.currentUserRuns
+    })
+
+    this.setState({
+      allRuns: nextProps.allRuns
+    })
+
+  }
+}
 
 
   render() {

@@ -160,6 +160,8 @@ export default class SimpleMap extends React.Component {
   componentWillMount(){
     console.log(this.state.sendname)
 
+    this.props.handleUsernameToApp(this.props.username)
+
 
     // users runs
 
@@ -181,6 +183,31 @@ export default class SimpleMap extends React.Component {
       }, () => console.log(this.state.allRuns[0].users[0].id)))
 
   }
+
+  componentWillReceiveProps(nextProps) {
+
+    if (nextProps.currentUserRuns.length !== this.props.currentUserRuns.length) {
+
+      this.setState({
+        userRuns: nextProps.currentUserRuns
+      })
+
+      this.setState({
+        allRuns: nextProps.allRuns
+      })
+
+    }
+    // else if (nextProps.allRuns.length !== this.props.allRuns.length) {
+    //
+    //   this.setState({
+    //     allRuns: nextProps.allRuns
+    //   })
+    //
+    // }
+
+  }
+
+
 
   static defaultProps = {
     center: {lat: 60.70, lng: -74.01},

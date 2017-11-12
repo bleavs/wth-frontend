@@ -116,8 +116,8 @@ class CreateRunModal extends React.Component {
 
   fetch('http://localhost:3000/api/v1/runs', runCreateParams)
     .then(resp=>resp.json())
-    .then(resp => console.log(resp)).then(() => {
-    // props.handleCreateRunSubmit
+    .then(resp => console.log(resp)).then((resp) => {
+    this.props.handleCreateRunSubmit(resp)
   })
 
   this.setState({

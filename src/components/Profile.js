@@ -37,6 +37,9 @@ const Profile = (props) => {
         <div style={{float: 'left'}}>
           <ViewRuns
             username={props.username}
+
+            currentUserRuns={props.currentUserRuns}
+            allRuns={props.allRuns}
             />
         </div>
 
@@ -51,6 +54,10 @@ const Profile = (props) => {
               geoLat={props.geoLat}
               geoLong={props.geoLong}
               username={props.username}
+              handleUsernameToApp={props.handleUsernameToApp}
+
+              currentUserRuns={props.currentUserRuns}
+              allRuns={props.allRuns}
               />
           </div>
 
