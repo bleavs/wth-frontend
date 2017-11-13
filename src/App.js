@@ -138,6 +138,27 @@ handleCreateRunSubmit = ((stuff) => {
 
 })
 
+handleJoinRunSubmit = ((stuff) => {
+
+  console.log(stuff)
+
+  fetch('http://localhost:3000/api/v1/runs')
+    .then(res => res.json())
+    .then(json => this.setState({
+      allRuns: json
+    }, () => console.log(this.state.allRuns))).then( () => {
+
+      fetch(`http://localhost:3000/api/v1/users/${this.state.sendname}`)
+    .then(res => res.json())
+    .then(json => this.setState({
+      currentUserRuns: json.runs
+    }, () => console.log(this.state.currentUserRuns))
+  )
+
+})
+
+})
+
 
 
 
@@ -183,6 +204,7 @@ handleCreateRunSubmit = ((stuff) => {
 
         handleCreateRunSubmit={this.handleCreateRunSubmit}
 
+        handleJoinRunSubmit={this.handleJoinRunSubmit}
 
 
 

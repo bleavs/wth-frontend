@@ -23,6 +23,7 @@ let divStyle = {
 
 const RunBox = (props) => (
 
+
   <div style={{  border: '3px dashed #666699',
 
     backgroundColor: 'white',
@@ -46,6 +47,11 @@ const RunBox = (props) => (
     <p><b>Expected End Time:</b> {props.run.expected_end_time}</p>
 
     <p><b>Date:</b> {props.run.date}</p>
+
+    <p><b>Distance from Location:</b> {props.run.dist_from_location}</p>
+
+
+
 
 
   </div>
@@ -75,7 +81,8 @@ class ViewRuns extends Component {
       currentUserRuns: [],
       runBox: false,
       sendname: name,
-      allRuns: []
+      allRuns: [],
+      viewFilter: ""
 
     }
 
@@ -112,17 +119,146 @@ componentWillReceiveProps(nextProps) {
   }
 }
 
+handleFilterView = (event) => {
+
+
+  console.log(event.target.value)
+
+  this.setState({
+    viewFilter: event.target.value
+  }, () => console.log(this.state.viewFilter))
+}
+
+
+//   console.log(this.state)
+//
+//   let newRun = {
+//   name: this.state.name,
+//   description: this.state.description,
+//   distance: this.state.distance,
+//   expected_pace: this.state.expectedPace,
+//   start_time: this.state.startTime,
+//   expected_end_time: this.state.expectedEndTime,
+//   date: this.state.date,
+//   lat: this.state.lat,
+//   lng: this.state.lng
+// }
+//
+// let runCreateParams = {
+//   method: 'POST',
+//   headers: {
+//     'Accept':'application/json',
+//     'Content-Type':'application/json',
+//     'Authorization':`Bearer ${localStorage.getItem('jwt')}`},
+//   body: JSON.stringify(newRun)
+// }
+//
+// fetch('http://localhost:3000/api/v1/runs', runCreateParams)
+//   .then(resp=>resp.json())
+//   .then(resp => console.log(resp)).then((resp) => {
+//   this.props.handleCreateRunSubmit(resp)
+// })
+//
+// this.setState({
+//   modalOpen: false
+// })
+
+// }
+
+haversineFunction = (run) => {
+  console.log(run)
+    var haversine = require('haversine')
+
+    let start = {
+      latitude: this.props.geoLat,
+      longitude: this.props.geoLong
+    }
+
+    let end = {
+      latitude: run.lat,
+      longitude: run.lng
+    }
+
+    const haversineCoords = (haversine(start, end, {unit: 'mile'}))
+
+    if (this.props.geoLat === "" || this.props.geoLong === ""){
+      return "Calculating..."
+    }
+     else {
+
+      if (run.lng === null || run.lat === null){
+        return "No Data"
+      } else {
+        run.dist_from_location = haversineCoords
+
+        return parseFloat(haversineCoords).toFixed(0) + " miles away"
+      }
+
+    }
+
+  }
+
+
+
+
 
   render() {
+
+    const userRunsWithDistance = this.state.currentUserRuns.map((run, index) => {
+      if (run.latitude === null || run.longitude === null){
+       return null
+     } else{
+       run.dist_from_location = this.haversineFunction(run)
+       return run
+     }
+   })
+
+
+
   return (
 
     <div className="ui container" style={divStyle}>
 
       <h1>Upcoming Runs</h1>
 
-          <div>
-            Radio Buttons for YOURS, OTHERS, ALL, and YOUR HERDS Filter
-          </div>
+
+              <div className="ui form" onChange={this.handleFilterView}>
+                <div className="inline fields">
+
+                  <label>Filter Upcoming Runs by:</label>
+
+                  <div className="field">
+                    <div className="ui radio checkbox">
+                      <input type="radio" name="frequency" value="Yours" />
+                      <label>Yours</label>
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <div className="ui radio checkbox">
+                      <input type="radio" name="frequency" value="Others" />
+                      <label>Others</label>
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <div className="ui radio checkbox">
+                      <input type="radio" name="frequency" value="All" />
+                      <label>All</label>
+                    </div>
+                  </div>
+
+                  <div className="field">
+                    <div className="ui radio checkbox">
+                      <input type="radio" name="frequency" value="Your Herds"/>
+                      <label>Your Herds</label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+
 
           <div>
             Distance Filter toggle (on/off) w/ radio buttons for w/in one mile and five miles
@@ -149,7 +285,7 @@ componentWillReceiveProps(nextProps) {
 }}>
 
 
-            {this.state.currentUserRuns.map(run =>
+            {userRunsWithDistance.map(run =>
 
               <div className="ui card">
                 <div className="card content">

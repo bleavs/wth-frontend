@@ -40,6 +40,9 @@ const Profile = (props) => {
 
             currentUserRuns={props.currentUserRuns}
             allRuns={props.allRuns}
+
+            geoLat={props.geoLat}
+            geoLong={props.geoLong}
             />
         </div>
 
@@ -58,6 +61,8 @@ const Profile = (props) => {
 
               currentUserRuns={props.currentUserRuns}
               allRuns={props.allRuns}
+
+              handleJoinRunSubmit={props.handleJoinRunSubmit}
               />
           </div>
 

@@ -300,13 +300,18 @@ export default class SimpleMap extends React.Component {
 
   fetch(`http://localhost:3000/api/v1/runs/${this.state.run.id}`, runUpdateParams)
     .then(resp=>resp.json())
-    .then(resp => console.log(resp)).then( () => {
+    .then(resp => console.log(resp))
+    .then( () => {
       fetch(`http://localhost:3000/api/v1/users/${this.state.sendname}`)
       .then(res => res.json())
       .then(json => this.setState({
         userRuns: json.runs
 
-      }, () => console.log(this.state.userRuns)))
+      },
+      () => console.log(this.state.userRuns)))
+      .then((resp) => {
+      this.props.handleJoinRunSubmit(resp)
+    })
     }
 
     )
