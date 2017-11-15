@@ -1,10 +1,15 @@
 import React from 'react'
+import Moment from 'react-moment'
+import * as moment from 'moment';
+
 import GoogleMapReact from 'google-map-react';
 import { Icon, Button, Form } from 'semantic-ui-react'
+
 
 var name;
 var firstname;
 var lastname;
+
 
 
 
@@ -20,6 +25,8 @@ const UserRunReactComponent = ({ text }) => (
 const HereReactComponent = ({ text }) => (
   <Icon name='crosshairs' color='red' size="large" />
 );
+
+
 
 
 let divStyle = {
@@ -64,15 +71,36 @@ const InfoBox = (props) => (
 
   <div style={divStyle}>
 
-    <p><b>Date:</b> {props.run.date}</p>
+  <p> <b>When:</b>
+      <Moment calendar>
+        {props.run.run_day}
+      </Moment>
+      (<Moment format="MMM Do, YY">
+        {props.run.run_day}
+      </Moment>)
+  </p>
 
-    <p><b>Start Time:</b> {props.run.start_time}</p>
 
-    <p><b>Description:</b> {props.run.description}</p>
+  <p><b>Expected End Time:</b>
+    <Moment format="h:mm: a">
+      {props.run.expected_end_time}
+    </Moment>
+  </p>
 
+
+
+    <p><b>Name:</b> {props.run.name}</p>
     <p><b>Distance(Miles):</b> {props.run.distance}</p>
-
+    <p><b>Description:</b> {props.run.description}</p>
     <p><b>Expected Pace:</b> {props.run.expected_pace}</p>
+
+
+    <p> <b>Time til Run:</b>
+      <Moment fromNow>
+        {props.run.run_day}
+      </Moment>
+    </p>
+
 
   </div>
 
@@ -84,17 +112,38 @@ const JoinBox = (props) => (
 
     <p><b>Would You Like To Join this Run?:</b></p>
 
-    <p><b>Date:</b> {props.run.date}</p>
-    <p><b>Start Time:</b> {props.run.start_time}</p>
-    <p><b>Expected End Time:</b> {props.run.expected_end_time}</p>
+
+    <p> <b>When:</b>
+      <Moment calendar>
+        {props.run.run_day}
+      </Moment>
+      (
+      <Moment format="MMM Do, YY">
+        {props.run.run_day}
+      </Moment>
+    )
+    </p>
+
+
+    <p><b>Expected End Time:</b>
+      <Moment format="h:mm: a">
+        {props.run.expected_end_time}
+      </Moment>
+    </p>
+
 
     <p><b>Name:</b> {props.run.name}</p>
-
-    <p><b>Description:</b> {props.run.description}</p>
-
     <p><b>Distance(Miles):</b> {props.run.distance}</p>
-
+    <p><b>Description:</b> {props.run.description}</p>
     <p><b>Expected Pace:</b> {props.run.expected_pace}</p>
+
+    <p> <b>Time til Run:</b>
+      <Moment fromNow>
+        {props.run.run_day}
+      </Moment>
+    </p>
+
+
 
     <Form
     size='large' key='large'
@@ -149,6 +198,8 @@ export default class SimpleMap extends React.Component {
       infoBox: false,
       joinBox: false,
       sendname: name
+
+
     }
 
 
@@ -180,7 +231,7 @@ export default class SimpleMap extends React.Component {
       .then(res => res.json())
       .then(json => this.setState({
         allRuns: json
-      }, () => console.log(this.state.allRuns[0].users[0].id)))
+      }, () => console.log(this.state.allRuns)))
 
   }
 
@@ -282,9 +333,9 @@ export default class SimpleMap extends React.Component {
     description: this.state.description,
     distance: this.state.distance,
     expected_pace: this.state.expectedPace,
-    start_time: this.state.startTime,
+
     expected_end_time: this.state.expectedEndTime,
-    date: this.state.date,
+    run_day: this.state.run_day,
     lat: this.state.lat,
     lng: this.state.lng
   }
@@ -321,6 +372,8 @@ export default class SimpleMap extends React.Component {
     })
 }
 
+
+
   render() {
     console.log(this.props)
     console.log(this.state)
@@ -353,9 +406,7 @@ export default class SimpleMap extends React.Component {
 
           <HereReactComponent lat={this.props.geoLat} lng={this.props.geoLong} />
 
-          {this.state.allRuns.map(run =>
-
-            this.state.userRuns.filter(userrun => userrun.id === run.id).length > 0 ?
+          {this.state.allRuns.filter((allrun) => moment().isSameOrBefore(allrun.run_day, 'hour')).map(run => this.state.userRuns.filter((userrun) => moment().isSameOrBefore(userrun.run_day, 'hour') && userrun.id === run.id).length > 0 ?
 
               <UserRunReactComponent
                 key={run.id}

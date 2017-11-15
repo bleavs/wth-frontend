@@ -21,18 +21,27 @@ class App extends Component {
       currentUser: "",
 
       username: "",
+
       currentUserRuns: [],
+
+
       runBox: false,
       sendname: "",
 
       allRuns: [],
+
       userRuns: [],
       userId: "",
       simpleMapLat: "",
       simpleMapLong: "",
       infoBox: false,
       joinBox: false,
-      simpleMapSendName: ""
+      simpleMapSendName: "",
+
+
+      upcomingAllRuns: [],
+      upcomingUserRuns: [],
+      otherRuns: []
 
 
     }
@@ -110,10 +119,20 @@ handleUsernameToApp = ((username) => {
     .then(res => res.json())
     .then(json => this.setState({
       allRuns: json
-    }, () => console.log(this.state.allRuns)))
+    }, () => console.log(this.state.allRuns))).then( () => {
 
-  }
+      this.setState({
+
+        otherRuns: this.state.allRuns.filter((allrun) => this.state.userRuns.filter((userrun) =>  allrun.id !== userrun.id))
+
+      }, () => console.log(this.state.otherRuns))
+    }
   )
+
+}
+)
+
+
 
 
 
@@ -132,7 +151,15 @@ handleCreateRunSubmit = ((stuff) => {
     .then(json => this.setState({
       currentUserRuns: json.runs
     }, () => console.log(this.state.currentUserRuns))
-  )
+  ).then( () => {
+
+    this.setState({
+
+      otherRuns: this.state.allRuns.filter((allrun) => this.state.userRuns.filter((userrun) =>  allrun.id !== userrun.id))
+
+    }, () => console.log(this.state.otherRuns))
+  }
+)
 
 })
 
@@ -155,7 +182,16 @@ handleJoinRunSubmit = ((stuff) => {
     }, () => console.log(this.state.currentUserRuns))
   )
 
-})
+}).then( () => {
+
+  this.setState({
+
+    otherRuns: this.state.allRuns.filter((allrun) => this.state.userRuns.filter((userrun) =>  allrun.id !== userrun.id))
+
+  }, () => console.log(this.state.otherRuns))
+
+}
+)
 
 })
 
@@ -188,6 +224,7 @@ handleJoinRunSubmit = ((stuff) => {
 
         username={this.state.username}
         currentUserRuns={this.state.currentUserRuns}
+
         runBox={this.state.runBox}
         sendname={this.state.sendname}
 
@@ -205,6 +242,8 @@ handleJoinRunSubmit = ((stuff) => {
         handleCreateRunSubmit={this.handleCreateRunSubmit}
 
         handleJoinRunSubmit={this.handleJoinRunSubmit}
+
+        otherRuns={this.state.otherRuns}
 
 
 

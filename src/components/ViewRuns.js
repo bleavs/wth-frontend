@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Moment from 'react-moment'
 
 var name;
 var firstname;
@@ -25,7 +26,6 @@ const RunBox = (props) => (
 
 
   <div style={{  border: '3px dashed #666699',
-
     backgroundColor: 'white',
     color: 'black',
     fontSize: 13,
@@ -34,23 +34,39 @@ const RunBox = (props) => (
 
     }}>
 
-    <p><b>Name:</b> {props.run.name}</p>
-
-    <p><b>Description:</b> {props.run.description}</p>
-
-    <p><b>Distance(Miles):</b> {props.run.distance}</p>
-
-    <p><b>Expected Pace:</b> {props.run.expected_pace}</p>
-
-    <p><b>Start Time:</b> {props.run.start_time}</p>
-
-    <p><b>Expected End Time:</b> {props.run.expected_end_time}</p>
-
-    <p><b>Date:</b> {props.run.date}</p>
-
     <p><b>Distance from Location:</b> {props.run.dist_from_location}</p>
 
+    <p> <b>When:</b>
+      <Moment calendar>
+        {props.run.run_day}
+      </Moment>
+      (
+      <Moment format="MMM Do, YY">
+        {props.run.run_day}
+      </Moment>
+    )
+    </p>
 
+    <p><b>Expected Finish:</b>
+
+      <Moment format="h:mm: a">
+        {props.run.expected_end_time}
+      </Moment>
+
+    </p>
+
+
+    <p><b>Name:</b> {props.run.name}</p>
+    <p><b>Distance(Miles):</b> {props.run.distance}</p>
+    <p><b>Description:</b> {props.run.description}</p>
+    <p><b>Expected Pace:</b> {props.run.expected_pace}</p>
+
+
+    <p> <b>Time til Run:</b>
+      <Moment fromNow>
+        {props.run.run_day}
+      </Moment>
+    </p>
 
 
 
@@ -62,8 +78,7 @@ class ViewRuns extends Component {
 
   constructor(props){
     super(props);
-    console.log(props.username.split(' ')[0])
-    console.log(props.username.split(' ')[1])
+
 
 
     if (props.username.split(' ')[1]){
@@ -82,7 +97,10 @@ class ViewRuns extends Component {
       runBox: false,
       sendname: name,
       allRuns: [],
-      viewFilter: ""
+      viewFilter: "",
+      otherRuns: [],
+
+      runsToDisplay: []
 
     }
 
@@ -99,14 +117,21 @@ class ViewRuns extends Component {
       .then(res => res.json())
       .then(json => this.setState({
         currentUserRuns: json.runs
-      }, () => console.log(this.state.currentUserRuns))
+      }, () => console.log(this.state.currentUserRuns))).then( () =>
 
-  )
+      this.setState({
+        runsToDisplay: this.state.currentUserRuns,
+
+        allRuns: this.props.allRuns
+      }, () => console.log(this.state.runsToDisplay)))
+
+
+
 }
 
 componentWillReceiveProps(nextProps) {
 
-  if (nextProps.currentUserRuns.length !== this.props.currentUserRuns.length) {
+  if (nextProps.currentUserRuns.length !== this.props.currentUserRuns.length || nextProps.allRuns.length !== this.props.allRuns.length || nextProps.otherRuns.length !== this.props.otherRuns.length ) {
 
     this.setState({
       currentUserRuns: nextProps.currentUserRuns
@@ -116,17 +141,49 @@ componentWillReceiveProps(nextProps) {
       allRuns: nextProps.allRuns
     })
 
+    this.setState({
+      otherRuns: nextProps.otherRuns
+    })
+
   }
 }
 
 handleFilterView = (event) => {
 
 
+
   console.log(event.target.value)
 
-  this.setState({
-    viewFilter: event.target.value
-  }, () => console.log(this.state.viewFilter))
+  // this.setState({
+  //   viewFilter: event.target.value
+  // }, () => console.log(this.state.viewFilter))
+  //
+  // if (this.state.viewFilter === "Yours"){
+  //
+  //   this.setState({
+  //     runsToDisplay: this.state.currentUserRuns
+  //   }, () => console.log(this.state.runsToDisplay))
+  // }
+  //
+  // else if (this.state.viewFilter === "Others"){
+  //   this.setState({
+  //     runsToDisplay: this.state.otherRuns
+  //   }, () => console.log(this.state.runsToDisplay))
+  // }
+  //
+  // else if (this.state.viewFilter === "All"){
+  //   this.setState({
+  //     runsToDisplay: this.state.allRuns
+  //   }, () => console.log(this.state.runsToDisplay))
+  // }
+
+  // else if (this.state.viewFilter === "Your Herds"){
+  //   this.setState({
+  //     runsToDisplay: []
+  //   }, () => console.log(this.state.runsToDisplay))
+  // }
+
+
 }
 
 
@@ -204,14 +261,14 @@ haversineFunction = (run) => {
 
   render() {
 
-    const userRunsWithDistance = this.state.currentUserRuns.map((run, index) => {
-      if (run.latitude === null || run.longitude === null){
-       return null
-     } else{
-       run.dist_from_location = this.haversineFunction(run)
-       return run
-     }
-   })
+   const RunsWithDistance = this.state.currentUserRuns.map((run, index) => {
+     if (run.latitude === null || run.longitude === null){
+      return null
+    } else{
+      run.dist_from_location = this.haversineFunction(run)
+      return run
+    }
+  })
 
 
 
@@ -248,12 +305,7 @@ haversineFunction = (run) => {
                     </div>
                   </div>
 
-                  <div className="field">
-                    <div className="ui radio checkbox">
-                      <input type="radio" name="frequency" value="Your Herds"/>
-                      <label>Your Herds</label>
-                    </div>
-                  </div>
+
 
                 </div>
               </div>
@@ -285,7 +337,7 @@ haversineFunction = (run) => {
 }}>
 
 
-            {userRunsWithDistance.map(run =>
+            {RunsWithDistance.map(run =>
 
               <div className="ui card">
                 <div className="card content">

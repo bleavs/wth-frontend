@@ -43,6 +43,9 @@ const Profile = (props) => {
 
             geoLat={props.geoLat}
             geoLong={props.geoLong}
+
+            otherRuns={props.otherRuns}
+
             />
         </div>
 
