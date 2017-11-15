@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Route, NavLink } from 'react-router-dom'
+import { Route, NavLink} from 'react-router-dom'
 import Profile from './components/Profile'
 import LoginForm from './components/LoginForm'
+
+import {Container, Menu} from 'semantic-ui-react'
 
 var name;
 var firstname;
@@ -206,8 +208,27 @@ handleJoinRunSubmit = ((stuff) => {
   return (
     <div style={{background: '#339966'}}>
 
-      <NavLink to="/login">Login</NavLink>
-      <NavLink to="/profile">Profile</NavLink>
+
+    <Menu fixed='top' inverted>
+      <Container>
+
+
+        <Menu.Item header>
+          <NavLink to="/profile" className="normal">Profile</NavLink>
+        </Menu.Item>
+
+        <Menu.Item header>
+            <NavLink to="/login" className="normal">Login</NavLink>
+
+        </Menu.Item>
+
+        <Menu.Item header>
+          <Route exact path="/login" component={LoginForm} />
+        </Menu.Item>
+      </Container>
+    </Menu>
+
+
 
       <Route exact path="/profile" render={()=><Profile
         latitude={this.state.latitude}
@@ -250,7 +271,7 @@ handleJoinRunSubmit = ((stuff) => {
 
         />} />
 
-      <Route exact path="/login" component={LoginForm} />
+
     </div>
   )
 }
