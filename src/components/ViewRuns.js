@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Moment from 'react-moment'
+import { Checkbox } from 'semantic-ui-react'
+
 
 var name;
 var firstname;
@@ -10,14 +12,14 @@ let divStyle = {
   border: '3px solid #666699',
   margin: 'auto',
 
-  width: '45vw',
+  width:'45vw',
+  height: '45vw',
 
 
   backgroundColor: 'white',
   color: 'black',
 
-  fontSize: 13,
-  padding: 4,
+
 
 
 }
@@ -25,14 +27,7 @@ let divStyle = {
 const RunBox = (props) => (
 
 
-  <div style={{  border: '3px dashed #666699',
-    backgroundColor: 'white',
-    color: 'black',
-    fontSize: 13,
-    padding: 4,
-
-
-    }}>
+  <div >
 
     <p><b>Distance from Location:</b> {props.run.dist_from_location}</p>
 
@@ -100,7 +95,8 @@ class ViewRuns extends Component {
       viewFilter: "",
       otherRuns: [],
 
-      runsToDisplay: []
+      runsToDisplay: [],
+      distanceFilter: false
 
     }
 
@@ -154,16 +150,13 @@ handleFilterView = (event) => {
 
   console.log(event.target.value)
 
-  // this.setState({
-  //   viewFilter: event.target.value
-  // }, () => console.log(this.state.viewFilter))
-  //
-  // if (this.state.viewFilter === "Yours"){
-  //
-  //   this.setState({
-  //     runsToDisplay: this.state.currentUserRuns
-  //   }, () => console.log(this.state.runsToDisplay))
-  // }
+  this.setState({
+    viewFilter: event.target.value
+  }, () => { if (this.state.viewFilter === "Yours"){
+    this.setState({
+      runsToDisplay: this.state.currentUserRuns
+    }, () => console.log(this.state.runsToDisplay))
+  }
   //
   // else if (this.state.viewFilter === "Others"){
   //   this.setState({
@@ -171,11 +164,13 @@ handleFilterView = (event) => {
   //   }, () => console.log(this.state.runsToDisplay))
   // }
   //
-  // else if (this.state.viewFilter === "All"){
-  //   this.setState({
-  //     runsToDisplay: this.state.allRuns
-  //   }, () => console.log(this.state.runsToDisplay))
-  // }
+  else if (this.state.viewFilter === "All"){
+    fetch('http://localhost:3000/api/v1/runs')
+      .then(res => res.json())
+      .then(json => this.setState({
+        runsToDisplay: json
+      }, () => console.log(this.state.allRuns)))
+  }
 
   // else if (this.state.viewFilter === "Your Herds"){
   //   this.setState({
@@ -183,8 +178,40 @@ handleFilterView = (event) => {
   //   }, () => console.log(this.state.runsToDisplay))
   // }
 
-
+})
 }
+
+// handleDistanceFilter = (event) => {
+//
+//   this.setState({
+//     distanceFilter: !(this.state.distanceFilter)
+//   }, () => if (this.state.distanceFilter === true){
+//
+//   })
+//
+// checkDistanceFilter = (runs) => {
+//
+//   if (this.state.distanceFilter === true){
+//
+//     runs.sort(function(a, b){
+//       if (a === null || b === null){
+//         null
+//       } else {
+//         return parseInt(a.distance.split(" ")[0]) - parseInt(b.distance.split(" ")[0])
+//       }
+//     })
+//
+//   }
+//
+// }
+
+
+  // this.setState({
+  //   distanceFilter: !this.state.distanceFilter
+  // }, () => {
+  //   if (this.state.distanceFilter ===)
+  // })
+
 
 
 //   console.log(this.state)
@@ -261,7 +288,7 @@ haversineFunction = (run) => {
 
   render() {
 
-   const RunsWithDistance = this.state.currentUserRuns.map((run, index) => {
+   let runsWithDistance = this.state.runsToDisplay.map((run, index) => {
      if (run.latitude === null || run.longitude === null){
       return null
     } else{
@@ -272,9 +299,10 @@ haversineFunction = (run) => {
 
 
 
+
   return (
 
-    <div className="ui container" style={divStyle}>
+    <div className="ui container" >
 
       <h1>Upcoming Runs</h1>
 
@@ -291,12 +319,7 @@ haversineFunction = (run) => {
                     </div>
                   </div>
 
-                  <div className="field">
-                    <div className="ui radio checkbox">
-                      <input type="radio" name="frequency" value="Others" />
-                      <label>Others</label>
-                    </div>
-                  </div>
+
 
                   <div className="field">
                     <div className="ui radio checkbox">
@@ -310,42 +333,29 @@ haversineFunction = (run) => {
                 </div>
               </div>
 
+              
 
 
-          <div>
-            Distance Filter toggle (on/off) w/ radio buttons for w/in one mile and five miles
-              w/ searchbar here to switch between relative to geoloc and searchedlocation
-          </div>
-
-          <div>
-            Soonest Filter toggle (on/off) - and if toggled on a Today/Tomorrow radio buttons
-          </div>
-
-          <div>
-            Below the Soonest filter should be a scrollable list of runs that presents relative to filters
-            and on click- possibly displays its location
-          </div>
-
-
-
-
-
-          <div className="ui container" style={{overflow: 'scroll', position: 'absolute',
+                  <div className="ui container" style={{overflow: 'scroll', position: 'absolute',
 
   width:'45vw',
-  height: '45vw'
+  height: '30vw'
 }}>
 
 
-            {RunsWithDistance.map(run =>
+            {runsWithDistance.map((run, index) =>
 
-              <div className="ui card">
+              <div className="ui card" style={{  border: '3px dashed #666699',
+              width:'45vw',
+                backgroundColor: 'white',
+                color: 'black',
+
+
+                }}>
                 <div className="card content">
 
                 <RunBox
-                  key={run.id}
-                  lat={run.lat}
-                  lng={run.lng}
+
                   run = {run}
                 />
 

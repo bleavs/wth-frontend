@@ -123,7 +123,7 @@ handleUsernameToApp = ((username) => {
 
       this.setState({
 
-        otherRuns: this.state.allRuns.filter((allrun) => this.state.userRuns.filter((userrun) =>  allrun.id !== userrun.id))
+        otherRuns: this.state.allRuns.filter((allrun) => this.state.currentUserRuns.filter((userrun) =>  allrun.id !== userrun.id))
 
       }, () => console.log(this.state.otherRuns))
     }
@@ -155,7 +155,7 @@ handleCreateRunSubmit = ((stuff) => {
 
     this.setState({
 
-      otherRuns: this.state.allRuns.filter((allrun) => this.state.userRuns.filter((userrun) =>  allrun.id !== userrun.id))
+      otherRuns: this.state.allRuns.filter((allrun) => this.state.currentUserRuns.filter((userrun) =>  allrun.id !== userrun.id))
 
     }, () => console.log(this.state.otherRuns))
   }
@@ -186,7 +186,7 @@ handleJoinRunSubmit = ((stuff) => {
 
   this.setState({
 
-    otherRuns: this.state.allRuns.filter((allrun) => this.state.userRuns.filter((userrun) =>  allrun.id !== userrun.id))
+    otherRuns: this.state.allRuns.filter((allrun) => this.state.currentUserRuns.filter((userrun) =>  allrun.id !== userrun.id))
 
   }, () => console.log(this.state.otherRuns))
 

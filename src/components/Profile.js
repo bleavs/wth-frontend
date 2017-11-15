@@ -19,20 +19,21 @@ const Profile = (props) => {
   return (
     <div>
 
-        <h1>---------------------------</h1>
-      <h1>Welcome Back to With The Herd (Eventual Navbar)</h1>
-        <h1>---------------------------</h1>
+      <h1>Welcome Back to The Herd, {props.username}</h1>
 
-      <h1>Hello, {props.username}</h1>
+      <div style={{float: 'left'}}>
+        <CreateRunModal handleCreateRunSubmit={props.handleCreateRunSubmit} />
+      </div>
 
-      <div>
+      <div style={{float: 'right'}}>
+
         <SimpleForm
           searchLocation={props.searchLocation}
           />
+
       </div>
 
-        <br />
-        <br />
+
 
         <div style={{float: 'left'}}>
           <ViewRuns
@@ -98,10 +99,11 @@ const Profile = (props) => {
                 <br />
                 <br />
                 <br />
+                <br />
+                <br />
+                
 
-        <div style={{float: 'right'}}>
-          <CreateRunModal handleCreateRunSubmit={props.handleCreateRunSubmit} />
-        </div>
+
 
       </div>
 
@@ -111,20 +113,10 @@ const Profile = (props) => {
             <br />
             <br />
             <br />
-
-            <br />
-            <br />
-            <br />
             <br />
             <br />
             <br />
 
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
 
 
     </div>

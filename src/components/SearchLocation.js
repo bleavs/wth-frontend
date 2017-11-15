@@ -33,7 +33,7 @@ class SimpleForm extends React.Component {
     }
 
     return (
-    <form className="button" style={{width: '50%'}} onSubmit={this.handleFormSubmit}>
+    <form className="button" style={{width: '90%'}} onSubmit={this.handleFormSubmit}>
 
           <PlacesAutocomplete inputProps={inputProps} />
 

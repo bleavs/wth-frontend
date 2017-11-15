@@ -406,10 +406,10 @@ export default class SimpleMap extends React.Component {
 
           <HereReactComponent lat={this.props.geoLat} lng={this.props.geoLong} />
 
-          {this.state.allRuns.filter((allrun) => moment().isSameOrBefore(allrun.run_day, 'hour')).map(run => this.state.userRuns.filter((userrun) => moment().isSameOrBefore(userrun.run_day, 'hour') && userrun.id === run.id).length > 0 ?
+          {this.state.allRuns.filter((allrun) => moment().isSameOrBefore(allrun.run_day, 'hour')).map((run, index) => this.state.userRuns.filter((userrun) => moment().isSameOrBefore(userrun.run_day, 'hour') && userrun.id === run.id).length > 0 ?
 
               <UserRunReactComponent
-                key={run.id}
+                key={index}
                 lat={run.lat}
                 lng={run.lng}
                 run = {run}
@@ -418,7 +418,7 @@ export default class SimpleMap extends React.Component {
               :
 
             <RunReactComponent
-              key={run.id}
+              key={index}
               lat={run.lat}
               lng={run.lng}
               run = {run}
@@ -452,17 +452,8 @@ export default class SimpleMap extends React.Component {
         <br />
         <br />
         <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+  
 
-        <br />
 
 
 
