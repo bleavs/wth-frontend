@@ -6,6 +6,7 @@ import CreateRunModal from './CreateRunModal'
 import SimpleMap from './MyMapComponent'
 import SimpleForm from './SearchLocation'
 import ViewRuns from './ViewRuns'
+import {Container} from 'semantic-ui-react'
 
 
 const Profile = (props) => {
@@ -17,6 +18,7 @@ const Profile = (props) => {
   console.log(props.geoLat)
 
   return (
+
     <div>
 
       <h1>Welcome Back to The Herd, {props.username}</h1>
@@ -25,7 +27,7 @@ const Profile = (props) => {
         <CreateRunModal handleCreateRunSubmit={props.handleCreateRunSubmit} />
       </div>
 
-      <div style={{float: 'right'}}>
+      <div style={{float: 'right' }}>
 
         <SimpleForm
           searchLocation={props.searchLocation}
@@ -53,6 +55,7 @@ const Profile = (props) => {
         <div style={{display: 'block'}}>
 
           <div style={{float: 'right'}}>
+
             <SimpleMap
               lat={props.latitude}
               long={props.longitude}
@@ -68,6 +71,7 @@ const Profile = (props) => {
 
               handleJoinRunSubmit={props.handleJoinRunSubmit}
               />
+
           </div>
 
                 <br />
@@ -101,7 +105,7 @@ const Profile = (props) => {
                 <br />
                 <br />
                 <br />
-                
+
 
 
 
@@ -120,6 +124,7 @@ const Profile = (props) => {
 
 
     </div>
+
 
   )
 }

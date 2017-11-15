@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Moment from 'react-moment'
 import { Checkbox } from 'semantic-ui-react'
+import { Radio } from 'semantic-ui-react'
 
 
 var name;
@@ -92,7 +93,7 @@ class ViewRuns extends Component {
       runBox: false,
       sendname: name,
       allRuns: [],
-      viewFilter: "",
+      viewFilter: false,
       otherRuns: [],
 
       runsToDisplay: [],
@@ -151,43 +152,31 @@ handleFilterView = (event) => {
   console.log(event.target.value)
 
   this.setState({
-    viewFilter: event.target.value
-  }, () => { if (this.state.viewFilter === "Yours"){
+    viewFilter: !(this.state.viewFilter)
+  }, () => { if (this.state.viewFilter === false){
     this.setState({
       runsToDisplay: this.state.currentUserRuns
     }, () => console.log(this.state.runsToDisplay))
-  }
-  //
-  // else if (this.state.viewFilter === "Others"){
-  //   this.setState({
-  //     runsToDisplay: this.state.otherRuns
-  //   }, () => console.log(this.state.runsToDisplay))
-  // }
-  //
-  else if (this.state.viewFilter === "All"){
+  } else if (this.state.viewFilter === true){
     fetch('http://localhost:3000/api/v1/runs')
       .then(res => res.json())
       .then(json => this.setState({
         runsToDisplay: json
-      }, () => console.log(this.state.allRuns)))
+      }, () => console.log(this.state.runsToDisplay)))
   }
 
-  // else if (this.state.viewFilter === "Your Herds"){
-  //   this.setState({
-  //     runsToDisplay: []
-  //   }, () => console.log(this.state.runsToDisplay))
-  // }
+
 
 })
 }
 
-// handleDistanceFilter = (event) => {
-//
-//   this.setState({
-//     distanceFilter: !(this.state.distanceFilter)
-//   }, () => if (this.state.distanceFilter === true){
-//
-//   })
+handleDistanceFilter = (event) => {
+
+  this.setState({
+    distanceFilter: !(this.state.distanceFilter)
+  }, () => console.log(this.state.distanceFilter))
+
+  }
 //
 // checkDistanceFilter = (runs) => {
 //
@@ -297,6 +286,15 @@ haversineFunction = (run) => {
     }
   })
 
+  let runsWithDistanceFilter = this.state.distanceFilter === false ?
+    runsWithDistance :
+
+       runsWithDistance.filter((run, index) => {
+        return parseInt(run.dist_from_location.split(" ")[0]) <= 1
+      })
+
+
+
 
 
 
@@ -307,33 +305,14 @@ haversineFunction = (run) => {
       <h1>Upcoming Runs</h1>
 
 
-              <div className="ui form" onChange={this.handleFilterView}>
-                <div className="inline fields">
-
-                  <label>Filter Upcoming Runs by:</label>
-
-                  <div className="field">
-                    <div className="ui radio checkbox">
-                      <input type="radio" name="frequency" value="Yours" />
-                      <label>Yours</label>
-                    </div>
-                  </div>
 
 
+              <Radio toggle onChange={this.handleFilterView} label="Yours/All" />
+              <br />
 
-                  <div className="field">
-                    <div className="ui radio checkbox">
-                      <input type="radio" name="frequency" value="All" />
-                      <label>All</label>
-                    </div>
-                  </div>
+               <Radio toggle onChange={this.handleDistanceFilter} label="w/in a mile?" />
 
 
-
-                </div>
-              </div>
-
-              
 
 
                   <div className="ui container" style={{overflow: 'scroll', position: 'absolute',
@@ -343,7 +322,7 @@ haversineFunction = (run) => {
 }}>
 
 
-            {runsWithDistance.map((run, index) =>
+            {runsWithDistanceFilter.map((run, index) =>
 
               <div className="ui card" style={{  border: '3px dashed #666699',
               width:'45vw',
